@@ -1,0 +1,30 @@
+<div class="container-fluid">
+    <div class="login-form">
+        <div class="logo">
+            <img src="logo.svg" class="logo-image" alt="">
+            <h6 class="logo-name">Happy Nest Men's PG</h6>
+        </div>
+        <h6 class="form-title">Login</h6>
+        <form [formGroup]="loginForm">
+            <div class="username form-section" *ngIf="!otpSended">
+                <label for="" class="form-label">Phone number:</label>
+                <input type="text" minlength="10" maxlength="10" placeholder="phone" class="form-control" [(ngModel)]="phoneNumber" formControlName="phoneNumber">
+                <div *ngIf="loginForm.controls['phoneNumber'].invalid&&loginForm.controls['phoneNumber'].touched" class="text-danger">
+                    <small *ngIf="loginForm.controls['phoneNumber'].errors?.['required']">Phonenumber is required</small>
+                </div>
+            </div>
+            <div class="password form-section" *ngIf="otpSended">
+                <label for="" class="form-label">OTP:</label>
+                <input type="password" placeholder="otp" class="form-control" [(ngModel)]="otp" formControlName="otp" >
+                <div *ngIf="loginForm.controls['otp'].invalid&&loginForm.controls['otp'].touched" class="text-danger">
+                    <small *ngIf="loginForm.controls['otp'].errors?.['required']">Username is required</small>
+                </div>
+            </div>
+            <div class="login-button">
+                <button *ngIf="!otpSended&&phoneNumber.length===10" class="btn" (click)="sendOtp()">Send OTP</button>
+                <button (click)="verifyOtp()" *ngIf="otpSended" class="btn" type="submit">Verify OTP</button>
+            </div>
+        </form>
+    </div>
+    <img class="bg-image" src="login.jpg" alt="background">
+</div>

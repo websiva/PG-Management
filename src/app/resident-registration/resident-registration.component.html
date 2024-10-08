@@ -1,0 +1,187 @@
+<div class="container-fluid">
+    <div class="registration-form">
+        <form [formGroup]="registrationForm" (ngSubmit)="createNewUser()">
+            <div class="header">
+                <h1 class="title" id="exampleModalLabel">New Resident Registration</h1>
+            </div>
+            <div class="body">
+                <h6 class="section-title">Personal information:</h6>
+                <div class="row m-0">
+                    <div class="col-md-6">
+                        <div class="input-group">
+                            <span class="input-group-text">Fullname</span>
+                            <input type="text" aria-label="fullname" class="form-control" formControlName="fullName">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="input-group">
+                            <span class="input-group-text">Gender</span>
+                            <select class="form-select" aria-label="Default select example" formControlName="gender">
+                                <option selected>Select gender</option>
+                                <option value="male">Male</option>
+                                <option value="female">Female</option>
+                                <option value="others">Others</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row m-0">
+                    <div class="col-md-6">
+                        <div class="input-group">
+                            <span class="input-group-text">Phonenumber</span>
+                            <input type="text" aria-label="phone" class="form-control" formControlName="phoneNumber">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="input-group">
+                            <span class="input-group-text">Email</span>
+                            <input type="email" aria-label="email" class="form-control" formControlName="emailId">
+                        </div>
+                    </div>
+                </div>
+                <div class="row m-0">
+                    <div class="col-md-6">
+                        <div class="input-group">
+                            <span class="input-group-text">Purpose of Staying</span>
+                            <select class="form-select" formControlName="purposeOfStaying">
+                                <option value="education">Education</option>
+                                <option value="work">Work</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="input-group">
+                            <span class="input-group-text">Has Vehicle</span>
+                            <div class="form-check form-check-inline my-auto mx-2">
+                                <input type="radio" class="form-check-input" id="vehicleYes" formControlName="vehicle"
+                                    [value]="true">
+                                <label class="form-check-label" for="vehicleYes">Yes</label>
+                            </div>
+                            <div class="form-check form-check-inline my-auto mx-2">
+                                <input type="radio" class="form-check-input" id="vehicleNo" formControlName="vehicle"
+                                    [value]="false">
+                                <label class="form-check-label" for="vehicleNo">No</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row m-0">
+                    <div class="col-md-6">
+                        <div class="input-group">
+                            <span class="input-group-text">Vehicle Type</span>
+                            <div class="form-check form-check-inline my-auto mx-2">
+                                <input type="radio" class="form-check-input" id="vehicleCar"
+                                    formControlName="vehicleType" value="Car">
+                                <label class="form-check-label" for="vehicleCar">Car</label>
+                            </div>
+                            <div class="form-check form-check-inline my-auto mx-2">
+                                <input type="radio" class="form-check-input" id="vehicleBike"
+                                    formControlName="vehicleType" value="Bike">
+                                <label class="form-check-label" for="vehicleBike">Bike</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="input-group">
+                            <span class="input-group-text">Vehicle No</span>
+                            <input type="text" class="form-control" formControlName="vehicleNumber">
+                        </div>
+                    </div>
+                </div>
+                <div class="home-address">
+                    <h6 class="section-title">Home Address:</h6>
+                    <div class="row m-0">
+                        <div class="col-md-6">
+                            <div class="input-group">
+                                <span class="input-group-text">AddressLine1</span>
+                                <input type="text" class="form-control" formControlName="homeAddressLine1">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="input-group">
+                                <span class="input-group-text">AddressLine2</span>
+                                <input type="text" class="form-control" formControlName="homeAddressLine2">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row m-0">
+                        <div class="col-md-6">
+                            <div class="input-group">
+                                <span class="input-group-text">City</span>
+                                <input type="text" class="form-control" formControlName="homeCity">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="input-group">
+                                <span class="input-group-text">District</span>
+                                <input type="text" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row m-0">
+                        <div class="col-md-6">
+                            <div class="input-group">
+                                <span class="input-group-text">State</span>
+                                <input type="text" class="form-control" formControlName="homeStateName">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="input-group">
+                                <span class="input-group-text">Pincode</span>
+                                <input type="text" class="form-control" formControlName="homePinCode">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="purpose-address">
+                    <h6 class="section-title">Company/Institution Address:</h6>
+                    <div class="row m-0">
+                        <div class="col-md-6">
+                            <div class="input-group">
+                                <span class="input-group-text">Work/Institution Name</span>
+                                <input type="text" class="form-control" formControlName="companyName">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="input-group">
+                                <span class="input-group-text">Place</span>
+                                <input type="text" class="form-control" formControlName="purposePlace">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row m-0">
+                        <div class="col-md-6">
+                            <div class="input-group">
+                                <span class="input-group-text">Landmark</span>
+                                <input type="text" class="form-control" formControlName="purposeLandMark">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="input-group">
+                                <span class="input-group-text">District</span>
+                                <input type="text" class="form-control" formControlName="purposeDistrict">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row m-0">
+                        <div class="col-md-6">
+                            <div class="input-group">
+                                <span class="input-group-text">State</span>
+                                <input type="text" class="form-control" formControlName="purposeStateName">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="input-group">
+                                <span class="input-group-text">Pincode</span>
+                                <input type="text" class="form-control" formControlName="purposePinCode">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer mt-5 d-flex justify-content-center">
+                <button type="submit" class="btn btn-success">Register</button>
+            </div>
+        </form>
+    </div>
+</div>

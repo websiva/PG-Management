@@ -1,0 +1,48 @@
+<div class="container-fluid">
+    <div class="row m-0">
+        <div class="filter-section">
+            
+        </div>
+        <div class="table-container">
+            <table mat-table [dataSource]="datasource" class="mat-elevation-z8">
+                <!--ID column-->
+                <ng-container matColumnDef="stayingPersonId">
+                    <th mat-header-cell *matHeaderCellDef>ID</th>
+                    <td mat-cell *matCellDef="let resident">{{resident.stayingPersonId}}</td>
+                </ng-container>
+
+                <!--name column-->
+                <ng-container matColumnDef="fullName">
+                    <th mat-header-cell *matHeaderCellDef>Name</th>
+                    <td mat-cell *matCellDef="let resident">{{resident.fullName}}</td>
+                </ng-container>
+
+                <!--Age column-->
+                <ng-container matColumnDef="phoneNumber">
+                    <th mat-header-cell *matHeaderCellDef>Phone</th>
+                    <td mat-cell *matCellDef="let resident">{{resident.phoneNumber}}</td>
+                </ng-container>
+
+                <!--Roomno column-->
+                <ng-container matColumnDef="bedId">
+                    <th mat-header-cell *matHeaderCellDef>Bed Id</th>
+                    <td mat-cell *matCellDef="let resident">{{resident.bedId}}</td>
+                </ng-container>
+
+                <!-- Action column -->
+                <ng-container matColumnDef="action">
+                    <th mat-header-cell *matHeaderCellDef>Action</th>
+                    <td mat-cell *matCellDef="let resident">
+                        <button class="btn btn-success" (click)="seeDetails(resident)">See Details</button>
+                    </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row;columns:displayedColumns"></tr>
+            </table>
+
+            <!--Paginator-->
+            <mat-paginator [pageSizeOptions]="[5,10,25]" showFirstLastButtons></mat-paginator>
+        </div>
+    </div>
+</div>
