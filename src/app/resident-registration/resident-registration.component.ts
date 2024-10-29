@@ -1,27 +1,33 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { AdminRequestsService } from '../Services/admin-requests.service';
 
 @Component({
   selector: 'app-resident-registration',
   templateUrl: './resident-registration.component.html',
   styleUrl: './resident-registration.component.scss'
 })
-export class ResidentRegistrationComponent {
-  registrationForm:FormGroup;
-  constructor(private router:Router,private formBuilder:FormBuilder){
+export class ResidentRegistrationComponent implements OnInit {
+  availableSharing:any;
+  availableBeds:any;
+  availableBedType:any;
+  registrationForm: FormGroup;
+
+  
+  constructor(private router: Router, private formBuilder: FormBuilder,private adminService:AdminRequestsService ) {
     //apply validations
-    this.registrationForm=this.formBuilder.group({
+    this.registrationForm = this.formBuilder.group({
       fullName: ['', Validators.required],
       gender: ['', Validators.required],
       phoneNumber: ['', Validators.required],
       emailId: ['', [Validators.required, Validators.email]],
-      vehicle: [false],
+      vehicle: [false, Validators.required],
       vehicleType: [''],
       vehicleNumber: [''],
       purposeOfStaying: ['', Validators.required],
       isVacated: [false],
-      checkInDate: ['', Validators.required],
+      checkInDate: [new Date()],
       checkOutDate: [''],
 
       // Home Address
@@ -40,12 +46,66 @@ export class ResidentRegistrationComponent {
       purposePinCode: ['', Validators.required],
 
       // BedId
+      sharing: ['', Validators.required],
+      bedType:['',Validators.required],
       bedId: ['', Validators.required]
     })
   }
 
+ngOnInit(): void {
+  this.getAvailableSharing();
+}
 
-  createNewUser(){
-    console.log(this.registrationForm.value);
+  get hasVehicle() {
+    return this.registrationForm.get('vehicle')?.value;
+  }
+
+  get noOfSharing(){
+    return this.registrationForm.get('sharing')?.value;
+  }
+
+  get bedType(){
+    return this.registrationForm.get('bedType')?.value;
+  }
+
+  //Get available sharing from DB
+  getAvailableSharing(){
+    this.adminService.getAvailableSharing().subscribe(data=>{
+      this.availableSharing=data;
+    })
+  }
+
+//Getting available bed from DB
+  getAvailablebed(){
+    this.adminService.getAvailableBedsBySharing(Number(this.noOfSharing),this.bedType).subscribe(data=>{
+      this.availableBeds=data;
+      console.log(this.availableBeds);
+    })
+  }
+
+  //Getting bedtype from DB
+  getAvailablebedType(){
+    this.adminService.getAvailableBedTypeBySharing(Number(this.noOfSharing)).subscribe(data=>{
+      this.availableBedType=data;
+      console.log(this.availableBedType);
+    })
+  }
+
+
+  createNewUser() {
+   if(this.registrationForm.valid){
+    const formData = {...this.registrationForm.value};
+
+    delete formData.sharing;
+    delete formData.bedType;
+
+    console.log(formData);
+
+    this.adminService.CreateNewResident(formData).subscribe(response=>{
+      alert("User created successfully");
+    },(error)=>{
+      alert("error when create user");
+    });
+   }
   }
 }

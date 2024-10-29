@@ -1,1 +1,77 @@
-<p>admin-rooms works!</p>
+<section id="rooms">
+    <div class="container-fluid">
+        <div class="row m-0">
+            <div class="col-12 filter-section">
+                <form [formGroup]="filterForm" (ngSubmit)="filterAction()">
+                    <div class="row m-0">
+                        <title class="section-title">Filter:</title>
+                        <div class="room-no col-12 col-md-4">
+                            <label for="roomNo" class="form-label">Room no:</label>
+                            <input type="text" class="form-control" id="roomNo" aria-label="roomNo"
+                                (keyup)="searchRooms()" formControlName="roomNo" placeholder="Enter Room no">
+                        </div>
+                        <div class="status col-12 col-md-4">
+                            <label for="status" class="form-label">Status:</label>
+                            <select class="form-select" id="status" aria-label="status" formControlName="status"
+                                (change)="filterAction()">
+                                <option [value]="profession" *ngFor="let profession of filteredRoomStatus">
+                                    {{profession}}</option>
+                            </select>
+                        </div>
+                        <div class="floor col-12 col-md-4">
+                            <label for="floor" class="form-label">Floor:</label>
+                            <select class="form-select" id="floor" aria-label="floor" formControlName="floor"
+                                (change)="filterAction()">
+                                <option [value]="state" *ngFor="let state of filteredFloors">
+                                    {{state}}</option>
+                            </select>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="rooms-container col-12">
+                <div class="row m-0">
+                    <title class="section-title">Rooms:</title>
+                    <div class="room-button col-6 col-md-3 col-xl-2 col-xxl-1" *ngFor="let room of Rooms">
+                        <button class="btn" data-bs-toggle="modal" data-bs-target="#roomDetail"
+                        (click)="seeDetails(room.roomId)">{{room.roomNo}}</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<div class="modal fade" id="roomDetail" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title" id="exampleModalLabel">Room Details</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="container-fluid">
+                    <div class="row m-0">
+                        <!-- Column 1 -->
+                        <h6 class="section-title">Personal details:</h6>
+                        <div class="col-md-6 personal-details">
+                            <!--<p><strong>Full Name:</strong> {{ selectedProject?.fullName }}</p>
+                            <p><strong>Phone Number:</strong> {{ selectedProject?.phoneNumber }}</p>
+                            <p><strong>Email:</strong> {{ selectedProject?.emailId }}</p>
+                            <p><strong>Check-in Date:</strong> {{ selectedProject?.checkInDate }}</p>-->
+                        </div>
+                        <!-- Column 2 -->
+                        <div class="col-md-6 vehicle-details">
+                        </div>
+                    </div>
+                    <hr>
+                </div>
+            </div>
+            <div class="modal-footer d-flex justify-content-between align-items-center px-md-5">
+                <!--<p class="bed-id"><strong>Bed ID:</strong> {{ selectedProject?.bedId }}</p>-->
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>

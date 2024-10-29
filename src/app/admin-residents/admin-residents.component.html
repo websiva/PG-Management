@@ -1,48 +1,143 @@
-<div class="container-fluid">
-    <div class="row m-0">
-        <div class="filter-section">
-            
+<section id="residents">
+    <div class="container-fluid">
+        <div class="row m-0">
+            <div class="col-12 filter-section">
+                <form [formGroup]="filterForm" (ngSubmit)="filterAction()">
+                    <div class="row m-0">
+                        <title class="section-title">Filter:</title>
+                        <div class="room-no col-12 col-md-3">
+                            <label for="bedId" class="form-label">Bed id:</label>
+                            <input type="text" class="form-control" id="bedId" aria-label="bedId" (keyup)="searchBeds()" formControlName="bedId" placeholder="Enter Bed Id">
+                        </div>
+                        <div class="two-wheeler col-12 col-md-3">
+                            <label for="vehicler" class="form-label">Vehicle:</label>
+                            <select class="form-select" id="vehicle" aria-label="vehicle"
+                                formControlName="vehicle"  (change)="filterAction()">
+                                <option [value]="vehicle" *ngFor="let vehicle of filteredVehicleStatus">
+                                    {{vehicle}}</option>
+                            </select>
+                        </div>
+                        <div class="two-wheeler col-12 col-md-3">
+                            <label for="profession" class="form-label">Profession:</label>
+                            <select class="form-select" id="profession" aria-label="profession"
+                                formControlName="profession" (change)="filterAction()">
+                                <option [value]="profession" *ngFor="let profession of filteredProfessions">
+                                    {{profession}}</option>
+                            </select>
+                        </div>
+                        <div class="State col-12 col-md-3">
+                            <label for="state" class="form-label">State:</label>
+                            <select class="form-select" id="state" aria-label="state"
+                                formControlName="state" (change)="filterAction()">
+                                <option [value]="state" *ngFor="let state of filteredstates">
+                                    {{state}}</option>
+                            </select>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="table-container col-12">
+                <title class="section-title">Residents:</title>
+                <table mat-table [dataSource]="datasource" class="mat-elevation-z8">
+                    <!--ID column-->
+                    <ng-container matColumnDef="stayingPersonId">
+                        <th mat-header-cell *matHeaderCellDef>ID</th>
+                        <td mat-cell *matCellDef="let resident">{{resident.stayingPersonId}}</td>
+                    </ng-container>
+
+                    <!--name column-->
+                    <ng-container matColumnDef="fullName">
+                        <th mat-header-cell *matHeaderCellDef>Name</th>
+                        <td mat-cell *matCellDef="let resident">{{resident.fullName}}</td>
+                    </ng-container>
+
+                    <!--Age column-->
+                    <ng-container matColumnDef="phoneNumber">
+                        <th mat-header-cell *matHeaderCellDef>Phone</th>
+                        <td mat-cell *matCellDef="let resident">{{resident.phoneNumber}}</td>
+                    </ng-container>
+
+                    <!--Roomno column-->
+                    <ng-container matColumnDef="bedId">
+                        <th mat-header-cell *matHeaderCellDef>Bed Id</th>
+                        <td mat-cell *matCellDef="let resident">{{resident.bedId}}</td>
+                    </ng-container>
+
+                    <!-- Action column -->
+                    <ng-container matColumnDef="action">
+                        <th mat-header-cell *matHeaderCellDef>Action</th>
+                        <td mat-cell *matCellDef="let resident">
+                            <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#residentDetail"
+                                (click)="seeDetails(resident.stayingPersonId)">See Details</button>
+                        </td>
+                    </ng-container>
+
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row;columns:displayedColumns"></tr>
+                </table>
+
+                <!--Paginator-->
+                <mat-paginator [pageSizeOptions]="[5,10,25]" showFirstLastButtons></mat-paginator>
+            </div>
         </div>
-        <div class="table-container">
-            <table mat-table [dataSource]="datasource" class="mat-elevation-z8">
-                <!--ID column-->
-                <ng-container matColumnDef="stayingPersonId">
-                    <th mat-header-cell *matHeaderCellDef>ID</th>
-                    <td mat-cell *matCellDef="let resident">{{resident.stayingPersonId}}</td>
-                </ng-container>
+    </div>
+</section>
 
-                <!--name column-->
-                <ng-container matColumnDef="fullName">
-                    <th mat-header-cell *matHeaderCellDef>Name</th>
-                    <td mat-cell *matCellDef="let resident">{{resident.fullName}}</td>
-                </ng-container>
 
-                <!--Age column-->
-                <ng-container matColumnDef="phoneNumber">
-                    <th mat-header-cell *matHeaderCellDef>Phone</th>
-                    <td mat-cell *matCellDef="let resident">{{resident.phoneNumber}}</td>
-                </ng-container>
-
-                <!--Roomno column-->
-                <ng-container matColumnDef="bedId">
-                    <th mat-header-cell *matHeaderCellDef>Bed Id</th>
-                    <td mat-cell *matCellDef="let resident">{{resident.bedId}}</td>
-                </ng-container>
-
-                <!-- Action column -->
-                <ng-container matColumnDef="action">
-                    <th mat-header-cell *matHeaderCellDef>Action</th>
-                    <td mat-cell *matCellDef="let resident">
-                        <button class="btn btn-success" (click)="seeDetails(resident)">See Details</button>
-                    </td>
-                </ng-container>
-
-                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-                <tr mat-row *matRowDef="let row;columns:displayedColumns"></tr>
-            </table>
-
-            <!--Paginator-->
-            <mat-paginator [pageSizeOptions]="[5,10,25]" showFirstLastButtons></mat-paginator>
+<div class="modal fade" id="residentDetail" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title" id="exampleModalLabel">Resident Details</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="container-fluid">
+                    <div class="row m-0">
+                        <!-- Column 1 -->
+                        <h6 class="section-title">Personal details:</h6>
+                        <div class="col-md-6 personal-details">
+                            <p><strong>Full Name:</strong> {{ selectedProject?.fullName }}</p>
+                            <p><strong>Phone Number:</strong> {{ selectedProject?.phoneNumber }}</p>
+                            <p><strong>Email:</strong> {{ selectedProject?.emailId }}</p>
+                            <p><strong>Check-in Date:</strong> {{ selectedProject?.checkInDate }}</p>
+                        </div>
+                        <!-- Column 2 -->
+                        <div class="col-md-6 vehicle-details">
+                            <p><strong>Vehicle:</strong> {{ selectedProject?.vehicle ? 'Yes' : 'No' }}</p>
+                            <p><strong>Vehicle Type:</strong> {{ selectedProject?.vehicle
+                                ?selectedProject.vehicleType:'NA' }}</p>
+                            <p><strong>Vehicle Number:</strong> {{ selectedProject?.vehicle
+                                ?selectedProject.vehicleNumber:'NA' }}</p>
+                            <p><strong>Purpose of Staying:</strong> {{ selectedProject?.purposeOfStaying }}</p>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row m-0">
+                        <div class="col-md-6 home-address">
+                            <h6 class="section-title">Home address:</h6>
+                            <p><strong>AddressLine 1:</strong> {{ selectedProject?.homeAddress?.addressLine1}}</p>
+                            <p><strong>AddressLine 2:</strong> {{ selectedProject?.homeAddress?.addressLine2}}</p>
+                            <p><strong>City:</strong> {{ selectedProject?.homeAddress?.city}}</p>
+                            <p><strong>State:</strong> {{ selectedProject?.homeAddress?.stateName}}</p>
+                            <p><strong>Pincode:</strong> {{ selectedProject?.homeAddress?.pinCode}}</p>
+                        </div>
+                        <div class="col-md-6 purpose-address">
+                            <h6 class="section-title">Company/Institute address:</h6>
+                            <p><strong>Comapny/Institue:</strong> {{ selectedProject?.purposeAddress?.companyName}}</p>
+                            <p><strong>Place:</strong> {{ selectedProject?.purposeAddress?.place}}</p>
+                            <p><strong>Landmark:</strong> {{ selectedProject?.purposeAddress?.landMark}}</p>
+                            <p><strong>District:</strong> {{ selectedProject?.purposeAddress?.district}}</p>
+                            <p><strong>State:</strong> {{ selectedProject?.purposeAddress?.stateName}}</p>
+                            <p><strong>Pincode:</strong> {{ selectedProject?.purposeAddress?.pinCode}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer d-flex justify-content-between align-items-center px-md-5">
+                <p class="bed-id"><strong>Bed ID:</strong> {{ selectedProject?.bedId }}</p>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
         </div>
     </div>
 </div>
