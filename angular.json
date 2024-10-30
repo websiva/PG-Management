@@ -24,7 +24,6 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "baseHref": "PG-Management",
             "outputPath": "dist/pg-front-end",
             "index": "src/index.html",
             "browser": "src/main.ts",

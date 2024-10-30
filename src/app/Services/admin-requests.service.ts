@@ -96,7 +96,7 @@ export class AdminRequestsService {
 
 
   //Create new resident
-  CreateNewResident(formData:any){
-    return this.httpClient.post(this.apiUrl+'/CreateNewUser',formData);
+  CreateNewResident(formData:any):Observable<any>{
+    return this.httpClient.post<any>(this.apiUrl+'/StayingPerson/CreateNewUser',formData);
   }
 }

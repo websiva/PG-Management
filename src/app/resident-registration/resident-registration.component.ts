@@ -26,9 +26,6 @@ export class ResidentRegistrationComponent implements OnInit {
       vehicleType: [''],
       vehicleNumber: [''],
       purposeOfStaying: ['', Validators.required],
-      isVacated: [false],
-      checkInDate: [new Date()],
-      checkOutDate: [''],
 
       // Home Address
       homeAddressLine1: ['', Validators.required],
@@ -48,7 +45,7 @@ export class ResidentRegistrationComponent implements OnInit {
       // BedId
       sharing: ['', Validators.required],
       bedType:['',Validators.required],
-      bedId: ['', Validators.required]
+      bedId: [0,Validators.required]
     })
   }
 
@@ -95,7 +92,7 @@ ngOnInit(): void {
   createNewUser() {
    if(this.registrationForm.valid){
     const formData = {...this.registrationForm.value};
-
+    formData.bedId = parseInt(formData.bedId);
     delete formData.sharing;
     delete formData.bedType;
 
